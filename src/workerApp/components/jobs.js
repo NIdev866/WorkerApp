@@ -10,7 +10,7 @@ import JobCards from "./jobCards"
 class Jobs extends Component{  
   render(){
     const actions = [
-    <Link to="/worker/myprofile">
+    <Link to="/myprofile">
       <FlatButton
         label="Go to my profile"
         primary={true}

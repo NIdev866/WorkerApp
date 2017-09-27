@@ -13,7 +13,7 @@ class WorkerParent extends Component {
   render(){
     return(
       <div>
-        {!this.props.bankDetailsSubmitted && <Redirect to="/worker/jobs"/>}
+        {!this.props.bankDetailsSubmitted && <Redirect to="/jobs"/>}
         <Nav />
       </div>
     )

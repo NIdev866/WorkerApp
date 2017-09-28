@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "1.0.7"
+    "css-loader": "^0.28.7",
+    "react-scripts": "1.0.7",
+    "style-loader": "^0.18.2"
   },
   "dependencies": {
     "axios": "0.16.2",
@@ -15,6 +17,7 @@
     "moment": "2.18.1",
     "react": "15.6.1",
     "react-addons-css-transition-group": "15.6.0",
+    "react-cropperjs": "^1.2.5",
     "react-datepicker": "0.54.0",
     "react-dom": "15.6.1",
     "react-dropbox-chooser": "0.0.3",

@@ -3,69 +3,36 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Field, reduxForm } from 'redux-form';
 import styles from './form_material_styles'
 import renderField from '../renderField'
-
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 
-
-
-class NIfield extends Component{
-
-    onChange(event) {
-      if (event.target.value.length === 1) {
-        this.refs[parseInt(event.target.id, 10) + 1].focus();
-      }
-    }
-
-
-  render(){
-    return(
-      <input 
-
-      id="1"
-      type='text' 
-      maxLength="1"
-      ref="1"
-      onChange={this.onChange}
+import TextField from 'material-ui/TextField'
+import {blue500, grey400} from 'material-ui/styles/colors'
 
 
 
-      {...this.props.input} />
-    )
-  }
-}
-
-
-
-
+import CropperJS from 'react-cropperjs';
 
 
 
 class Myprofile extends Component{
   constructor(props){
     super(props)
-    this.onChange = this.onChange.bind(this)
+    this._crop = this._crop.bind(this)
   }
 
-    onChange(event) {
-      if (event.target.value.length === event.target.maxLength) {
-        this.refs[parseInt(event.target.id, 10) + 1].focus();
-      }
-    }
 
-
+  _crop(){
+    // image in dataUrl 
+    console.log(this.refs.cropper.getCroppedCanvas().toDataURL());
+  }
 
 
   render(){
     const { handleSubmit } = this.props;   
-
-    const NIstyle = {
-      width: '10px'
-    }
-
     return(
-      <div style={{backgroundColor: 'red', width: '80vw', margin: '0 auto'}}>
+      <div style={{width: '80vw', margin: '0 auto'}}>
         {
         !this.props.bankDetailsSubmitted &&
 
@@ -73,110 +40,42 @@ class Myprofile extends Component{
 
                   <div style={{marginTop: '10px', marginBottom: '10px'}}>You have to enter these details first</div>
 
-{/*                  <div>
-                    <Field 
-                      name='NI1' 
-                      type='text'
-                      component={({input})=>{return <input type='text' {...input}/>}}
-                      id="1"
-                      maxLength="2"
-                      ref="1"
-                      onChange={this.onChange}/>
-                    <Field 
-                      name='NI2' 
-                      type='text'
-                      component={({input})=>{return <input type='text' {...input}/>}}
-                      id="2"
-                      maxLength="2"
-                      ref="2"
-                      onChange={this.onChange}/>
-                    <Field 
-                      name='NI3' 
-                      component={({input})=>{return <input type='text' {...input}/>}}
-                      id="3"
-                      maxLength="2"
-                      ref="3"
-                      onChange={this.onChange}/>
-                    <Field 
-                      name='NI4' 
-                      component={({input})=>{return <input type='text' {...input}/>}}
-                      id="4"
-                      maxLength="2"
-                      ref="4"
-                      onChange={this.onChange}/>
-                  </div>*/
-
-
-/*worker app: first page - jak login do email password 2 email repeat die do backend niece she zapisuj e w reduxie. Jack 
-
-
-
-1: login page for worker - password twice will send him token etc
-
-2: workers details do backendu - I formularz na profile page na worker.
-
-
-
-
-
-
-NI number (can be empty, then he can edit later to add),
-
-Sort code
-
-8 cyfr account number
-
-adres dokladny - 1 is ‘road’ req-2 court name req, 3 building name - 4 house OR flat req number
-, postal code (NOT postcode), county (not required), 
-(skopiuj od jakiejs innej agencji)
-
-data urodzenia (date picker osobne na rok etc)
-
-
-
-
-al these details has to be editable after submittion
-the picture has to be added here by him
-*/
-
-
-
-                }
-
-
-
-                <div>
-                  <span>Account number</span>
-                  <Field
-                    name="account_number"
-                    type="text"
-                    component={({input})=>{return <input type='text' {...input}/>}}
-                    label="Account Number"
-                  />
-                </div>
                 <div>
                   <div style={{marginTop: '10px'}}>Road name</div>
-                  <Field
-                    name="road_name"
-                    type="text"
-                    component={({input})=>{return <input type='text' {...input}/>}}
-                    label="Road Name"
-                  />
+                  {/*<Field
+                                      name="road_name"
+                                      type="text"
+                                      component={({input})=>{return <input type='text' {...input}/>}}
+                                      label="Road Name"
+                                    />*/}
                 </div>
-                  <RaisedButton
+
+
+
+
+
+      <CropperJS
+        ref='cropper'
+        src='http://i.imgur.com/n483ZwJ.jpg'
+        style={{height: 400, width: '100%'}}
+        // Cropper.js options 
+        aspectRatio={16 / 9}
+        guides={false}
+        crop={this._crop.bind(this)} />
+
+
+https://github.com/blueimp/JavaScript-Canvas-to-Blob
+https://blueimp.github.io/JavaScript-Canvas-to-Blob/test/
+https://www.npmjs.com/package/react-cropperjs
+https://www.kurzor.co.uk/blog/28-uploading-and-resizing-images-with-reactjs
+
+
+{/*                  <RaisedButton
                     type="submit"
                     label="SIGN UP"
                     primary={true}
-                  />
+                  />*/}
                 </form>
-
-
-
-
-
-
-
-
 
           /*<RaisedButton
             type="button"

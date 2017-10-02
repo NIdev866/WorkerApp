@@ -59,7 +59,6 @@ export function fetchAllCampaigns(){
   return function(dispatch){
     axios.get(`${ROOT_URL}/campaigns/all`)
       .then(response => {
-        console.log('BLAHHHH')
         dispatch({ type: ALL_CAMPAIGNS, payload: response.data });
       })
       .catch((err)=>{
@@ -80,17 +79,44 @@ export function fetchAllCampaigns(){
 
 export function signinUser({ email, password }) {
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/signin`, { email, password })
+    axios.post(`${ROOT_URL}/worker/login`, { email, password })
       .then(response => {
-        localStorage.setItem('admin_email', email);
+        localStorage.setItem('worker_email', email);
         dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('worker_id', response.data.id);
       })
       .catch((err) => {
         dispatch(authError('Bad Sign-in Information'));
       });
   };
 }
+
+export function authError(error) {
+  return {
+    type: AUTH_ERROR,
+    payload: error
+  };
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function authUser() {
+  return {
+    type: AUTH_USER
+  };
+}
+
 
 export function signupUser({ email, password }) {
   return function(dispatch) {
@@ -111,13 +137,6 @@ export function signoutUser(error) {
   localStorage.removeItem('admin_email');
   return {
     type: UNAUTH_USER
-  };
-}
-
-export function authError(error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
   };
 }
 

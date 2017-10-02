@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { signupUser, clearAuthError } from '../actions';
-import renderField from './renderField'
+import { signinUser, clearAuthError } from '../../actions';
+import renderField from '../renderField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
-class Signup extends Component {
+import loginSubmit from './loginSubmit'
+
+class Signin extends Component {
   constructor() {
     super();
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
   handleFormSubmit(formProps) {
-    this.props.signupUser(formProps)
+    this.props.signinUser(formProps)
   }
   renderAlert() {
     if (this.props.errorMessage) {
@@ -23,14 +26,16 @@ class Signup extends Component {
     }
   }
   componentDidMount(){
-    //this.props.clearAuthError()
+    this.props.clearAuthError()
   }
   render() {
-    const { handleSubmit } = this.props;   
+    const { handleSubmit } = this.props;      
     return (
       <div style={{maxWidth: "500px", margin: "0 auto"}}>
         <div style={{marginRight: "15px", marginLeft: "15px"}}>
-          {!this.props.authenticated &&
+          {this.props.authenticated ?
+            <Redirect to="/jobs"/>
+            :
             <form onSubmit={handleSubmit(this.handleFormSubmit)}>
               <Field
                 name="email"
@@ -44,16 +49,10 @@ class Signup extends Component {
                 component={renderField}
                 label="Password"
               />
-              <Field
-                name="passwordConfirm"
-                type="password"
-                component={renderField}
-                label="Confirm Password"
-              />
               {this.renderAlert()}
               <RaisedButton
                 type="submit"
-                label="SIGN UP"
+                label="SIGN IN"
                 primary={true}
               />
             </form>
@@ -76,16 +75,20 @@ function validate(formProps) {
   if (!formProps.password) {
     errors.password = 'Please enter a password';
   }
-  if (!formProps.passwordConfirm) {
-    errors.passwordConfirm = 'Please enter a password confirmation';
-  }
-  if (formProps.password !== formProps.passwordConfirm) {
-    errors.password = 'Passwords must match';
-  }
   return errors;
 }
 
+function mapStateToProps(state) {
+  return {
+    errorMessage: state.auth.error,
+    authenticated: state.auth.authenticated
+  };
+}
+
 export default reduxForm({
-  form: 'signup',
-  validate
-})(Signup)
+  form: 'signin',
+  validate,
+  onSubmit: loginSubmit
+})(
+  connect(mapStateToProps, { signinUser, clearAuthError })(Signin)
+);

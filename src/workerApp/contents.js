@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import Nav from "./components/nav"
 import Progress from "./components/progress"
-import Contents from './contents'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router'
@@ -10,14 +9,15 @@ import { Redirect } from 'react-router'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-class WorkerParent extends Component {
+class Contents extends Component {
   render(){
-    return(
-      <div>
-        <Nav />
-        <Contents url={this.props.match.url} />
-      </div>
-    )
+    const worker_id = localStorage.getItem('worker_id');
+    if(!this.props.authenticated){
+      return <Redirect to="/login"/>
+    }
+    else if(this.props.url !== `/${worker_id}/jobs`){
+      return <Redirect to={`/${worker_id}/jobs`}/>
+    }
   }
 }
 
@@ -27,4 +27,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, actions)(WorkerParent);
+export default connect(mapStateToProps, actions)(Contents);

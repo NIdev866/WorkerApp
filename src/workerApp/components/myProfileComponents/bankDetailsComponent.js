@@ -5,7 +5,7 @@ import styles from '../form_material_styles'
 import renderField from '../../renderField'
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
-import {change} from 'redux-form'
+import {change, submit} from 'redux-form'
 import validate from '../validate'
 import TextField from 'material-ui/TextField'
 import AvatarCropper from "react-avatar-cropper";
@@ -14,9 +14,23 @@ import bankDetailsSubmit from "./submitActions/bankDetailsSubmit"
 import { RadioButton } from 'material-ui/RadioButton'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import DatePicker from 'material-ui/DatePicker';
+import MenuItem from 'material-ui/MenuItem'
 
 
+const pay_method = [
+  'BANK_TRANSFER',
+  'CHEQUE',
+  'CASH',
+  'PAYPAL',
+  'BITCOIN'
+]
 
+const pay_frequency = [
+  'NEXT_WEEK',
+  'SAME_WEEK',
+  'NEXT_MONTH',
+  'SAME_MONTH'
+]
 
 
 const renderError = ({ input, meta: { error } }) => (
@@ -61,7 +75,7 @@ class BankDetailsComponent extends Component{
           allSortocodeBoxes.push(this.state[`sortcode${i+1}`])
         }
         let allSortocodeBoxesJoined = allSortocodeBoxes.join('')
-        this.props.dispatch(change('bankDetails', 'sortcode', allSortocodeBoxesJoined))
+        this.props.dispatch(change('bankDetails', 'sort_code', allSortocodeBoxesJoined))
       })
     }
   }
@@ -74,6 +88,7 @@ class BankDetailsComponent extends Component{
         result.push(
           <span>
           <TextField id={refStringified} inputStyle={{textAlign: 'center'}} type="text" 
+              onBlur={() => this.props.dispatch(submit('bankDetails'))}
           maxLength='2' ref={refStringified} style={{width: '12%', marginRight: '0px'}}name="" 
           onChange={this.sortcodeOnChange}/>
             &mdash;
@@ -83,6 +98,7 @@ class BankDetailsComponent extends Component{
       else{
         result.push(
           <TextField id={refStringified} inputStyle={{textAlign: 'center'}} type="text" 
+              onBlur={() => this.props.dispatch(submit('bankDetails'))}
           maxLength='2' ref={refStringified} style={{width: '12%', marginRight: '0px'}}name="" 
           onChange={this.sortcodeOnChange}/>
         )
@@ -104,7 +120,7 @@ class BankDetailsComponent extends Component{
           allBank_account_numbers.push(this.state[`bank_account_number${i+1}`])
         }
         let allBank_account_numbersJoined = allBank_account_numbers.join('')
-        this.props.dispatch(change('bankDetails', 'bank_account_number', allBank_account_numbersJoined))
+        this.props.dispatch(change('bankDetails', 'acc_no', allBank_account_numbersJoined))
       })
     }
   }
@@ -114,6 +130,7 @@ class BankDetailsComponent extends Component{
     for(let i = 30; i < 38; i++){
       let refStringified = ref.toString()
       result.push(<TextField id={refStringified} inputStyle={{textAlign: 'center'}} type="text" 
+              onBlur={() => this.props.dispatch(submit('bankDetails'))}
         maxLength='1' ref={refStringified} style={{width: '9%', marginRight: '8px'}}name="" 
         onChange={this.bankAccountNumberOnChange}/>)
       ref++
@@ -157,12 +174,34 @@ class BankDetailsComponent extends Component{
             <div>sortcode</div>
               {this.sortcodeFields()}
           </div>
-          <Field name="sortcode" component={renderError} />
+          <Field name="sort_code" component={renderError} />
           <div>
             <div>Bank account number</div>
               {this.bankAccountNumberFields()}
           </div>
-          <Field name="bank_account_number" component={renderError} />
+          <Field name="acc_no" component={renderError} />
+          <div style={{marginTop: '-20px'}}>
+            <Field name="pay_method" component={SelectField} 
+              onChange={() => this.props.dispatch(submit('bankDetails'))}
+              hintText="Payment method" 
+              selectedMenuItemStyle={{color: "#00BCD4"}} 
+              underlineStyle={{display: "none"}} 
+              errorStyle={{display: "none"}}>
+            {pay_method.map(pay_method => <MenuItem value={pay_method} primaryText={pay_method}/>)}
+            </Field>
+            <Field name="pay_method" component={renderError} />
+          </div>
+          <div style={{marginTop: '-20px'}}>
+            <Field name="pay_frequency" component={SelectField} 
+              onChange={() => this.props.dispatch(submit('bankDetails'))}
+              hintText="Pay frequency" 
+              selectedMenuItemStyle={{color: "#00BCD4"}} 
+              underlineStyle={{display: "none"}} 
+              errorStyle={{display: "none"}}>
+            {pay_frequency.map(pay_frequency => <MenuItem value={pay_frequency} primaryText={pay_frequency}/>)}
+            </Field>
+            <Field name="pay_frequency" component={renderError} />
+          </div>
         </form>
 
       </div>

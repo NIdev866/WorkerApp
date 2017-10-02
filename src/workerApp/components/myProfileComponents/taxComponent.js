@@ -5,15 +5,16 @@ import styles from '../form_material_styles'
 import renderField from '../../renderField'
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
-import {change} from 'redux-form'
+import {change, submit} from 'redux-form'
 import validate from '../validate'
 import TextField from 'material-ui/TextField'
 import AvatarCropper from "react-avatar-cropper";
 import ReactDom from "react-dom";
-import submit from "../submit"
 import { RadioButton } from 'material-ui/RadioButton'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import DatePicker from 'material-ui/DatePicker';
+
+import taxSubmit from './submitActions/taxSubmit'
 
 
 
@@ -59,7 +60,7 @@ class TaxComponent extends Component{
           allNInumbers.push(this.state[`NI${i+1}`])
         }
         let allNInumbersJoined = allNInumbers.join('')
-        this.props.dispatch(change('taxDetails', 'NI_number', allNInumbersJoined))
+        this.props.dispatch(change('taxDetails', 'ni_number', allNInumbersJoined))
       })
     }
   }
@@ -85,7 +86,8 @@ class TaxComponent extends Component{
       this.setState({
         birthDateFormatted: this.formatDate(this.state.birthDate)
       }, ()=>{
-        this.props.dispatch(change('taxDetails', 'birth_date', this.state.birthDateFormatted));
+        this.props.dispatch(change('taxDetails', 'dob', this.state.birthDateFormatted));
+        setTimeout(()=>{this.props.dispatch(submit('taxDetails'))}, 500)
       })
     })
   }
@@ -124,10 +126,11 @@ class TaxComponent extends Component{
                 <div>National Insurance number</div>
                   {this.NIfields()}
               </div>
-            <Field name="NI_number" component={renderError} />            
+            <Field name="ni_number" component={renderError} />            
             <div>
               <div style={{marginTop: '10px'}}>Birth date</div>
                 <DatePicker
+                  onBlur={() => this.props.dispatch(submit('addressDetails'))}
                   hintText="Birth date"
                   value={this.state.birthDate}
                   onChange={this.handleBirthDateChange}
@@ -135,7 +138,7 @@ class TaxComponent extends Component{
                   openToYearSelection={true}
                 />
             </div>
-            <Field name="birth_date" component={renderError} />
+            <Field name="dob" component={renderError} />
         </form>
 
       </div>
@@ -146,7 +149,7 @@ class TaxComponent extends Component{
 TaxComponent = reduxForm({
   form: 'taxDetails',
   validate,
-  onSubmit: submit
+  onSubmit: taxSubmit
 })(TaxComponent)
 
 export default TaxComponent

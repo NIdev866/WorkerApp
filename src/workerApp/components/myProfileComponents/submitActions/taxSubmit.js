@@ -4,7 +4,9 @@ import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router'
 
 
-function AddressSubmit(values){
+function TaxSubmit(values){
+
+  console.log(values)
 
   const worker_id = localStorage.getItem('worker_id');
 
@@ -12,4 +14,4 @@ function AddressSubmit(values){
 }
 
 
-export default AddressSubmit
+export default TaxSubmit

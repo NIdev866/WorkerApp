@@ -22,45 +22,51 @@ import DatePicker from 'material-ui/DatePicker';
 
 
 
-const HouseFlatNumberComponent = ({input})=>(
+const HouseFlatNumberComponent = ({input, dispatch})=>(
   <TextField inputStyle={{textAlign: 'center'}} type="text" 
+          onBlur={() => dispatch(submit('addressDetails'))}
     maxLength='5' style={{width: '15%', marginRight: '0px'}}
     {...input}
   />
 )
 
-const RoadCourtBuildingCountyNameComponent = ({input})=>(
+const RoadCourtBuildingCountyNameComponent = ({input, dispatch})=>(
   <TextField inputStyle={{textAlign: 'left'}} type="text" 
+          onBlur={() => dispatch(submit('addressDetails'))}
     maxLength='70' style={{width: '50%', marginRight: '0px'}}
     {...input}
   />
 )
 
-const HouseChosen = ()=>(
+const HouseChosen = ({dispatch})=>(
   <div>
     <div style={{marginTop: '15px', marginBottom: '-4px'}}>
     <div>House number</div>
     <Field
-      name="house_number"
+      onBlur={() => dispatch(submit('addressDetails'))}
+      name="house_no"
       type="text"
+      dispatch={dispatch}
       component={HouseFlatNumberComponent}
     />
     </div>
-    <Field name="house_number" component={renderError} />
+    <Field name="house_no" component={renderError} />
   </div>
 )
 
-const FlatChosen = ()=>(
+const FlatChosen = ({dispatch})=>(
   <div>
     <div style={{marginTop: '15px', marginBottom: '-4px'}}>
     <div>Flat number</div>
     <Field
-      name="flat_number"
+      onBlur={() => dispatch(submit('addressDetails'))}
+      name="flat_no"
       type="text"
+      dispatch={dispatch}
       component={HouseFlatNumberComponent}
     />
     </div>
-    <Field name="flat_number" component={renderError} />
+    <Field name="flat_no" component={renderError} />
   </div>
 )
 
@@ -95,7 +101,7 @@ class AddressComponent extends Component{
         allPostal_codeBoxes.push(this.state[`postal_code${i+1}`])
       }
       let allPostal_codeBoxesJoined = allPostal_codeBoxes.join('')
-      this.props.dispatch(change('addressDetails', 'postal_code', allPostal_codeBoxesJoined))
+      this.props.dispatch(change('addressDetails', 'address_road3', allPostal_codeBoxesJoined))
     })
   }
   postal_codeFields(){
@@ -107,6 +113,7 @@ class AddressComponent extends Component{
         result.push(
           <span>
           <TextField id={refStringified} inputStyle={{textAlign: 'center'}} type="text" 
+          onBlur={() => this.props.dispatch(submit('addressDetails'))}
           maxLength='5' ref={refStringified} style={{width: '15%', marginRight: '0px'}}name="" 
           onChange={this.postal_codeOnChange}/>
             &mdash;
@@ -115,7 +122,8 @@ class AddressComponent extends Component{
       }
       else{
         result.push(
-          <TextField id={refStringified} inputStyle={{textAlign: 'center'}} type="text" 
+          <TextField onBlur={() => this.props.dispatch(submit('addressDetails'))} id={refStringified} 
+          inputStyle={{textAlign: 'center'}} type="text" 
           maxLength='5' ref={refStringified} style={{width: '15%', marginRight: '0px'}}name="" 
           onChange={this.postal_codeOnChange}/>
         )
@@ -126,10 +134,10 @@ class AddressComponent extends Component{
   }
   houseOrFlatChosen(){
     if(this.props.house_or_flat === "house"){
-      return <HouseChosen/>
+      return <HouseChosen dispatch={this.props.dispatch}/>
     }
     else if(this.props.house_or_flat === "flat"){
-      return <FlatChosen/>
+      return <FlatChosen dispatch={this.props.dispatch}/>
     }
   }
 
@@ -169,23 +177,33 @@ class AddressComponent extends Component{
                 <div style={{marginTop: '10px'}}>Road name</div>
                 <Field
                   onBlur={() => this.props.dispatch(submit('addressDetails'))}
-                  name="road_name"
+                  name="address_road1"
                   type="text"
                   component={RoadCourtBuildingCountyNameComponent}
                 />
               </div>
-              <Field name="road_name" component={renderError} />
+              <Field name="address_road1" component={renderError} />
               <div>
                 <div style={{marginTop: '10px'}}>Court name</div>
                 <Field
                   onBlur={() => this.props.dispatch(submit('addressDetails'))}
-                  name="court_name"
+                  name="address_road2"
                   type="text"
                   component={RoadCourtBuildingCountyNameComponent}
                 />
               </div>
-              <Field name="court_name" component={renderError} />
+              <Field name="address_road2" component={renderError} />
               <div>
+                <div style={{marginTop: '10px'}}>Town</div>
+                <Field
+                  onBlur={() => this.props.dispatch(submit('addressDetails'))}
+                  name="town"
+                  type="text"
+                  component={RoadCourtBuildingCountyNameComponent}
+                />
+              </div>
+              <Field name="town" component={renderError} />
+{/*              <div>
                 <div style={{marginTop: '10px'}}>Building name</div>
                 <Field
                   onBlur={() => this.props.dispatch(submit('addressDetails'))}
@@ -194,7 +212,7 @@ class AddressComponent extends Component{
                   component={RoadCourtBuildingCountyNameComponent}
                 />
               </div>
-              <Field name="building_name" component={renderError} />
+              <Field name="building_name" component={renderError} />*/}
             </div>
             <div style={{float: 'right', width: '50%', height: '100%'}}>
               <div style={{marginBottom: "-30px"}}>Do you live in a house or a flat?</div>
@@ -213,10 +231,11 @@ class AddressComponent extends Component{
                 <div>postal code</div>
                   {this.postal_codeFields()}
               </div>
-              <Field name="postal_code" component={renderError} />
+              <Field name="address_road3" component={renderError} />
               <div>
                 <div style={{marginTop: '10px'}}>County</div>
                 <Field
+                  onBlur={() => this.props.dispatch(submit('addressDetails'))}
                   name="county"
                   type="text"
                   component={RoadCourtBuildingCountyNameComponent}

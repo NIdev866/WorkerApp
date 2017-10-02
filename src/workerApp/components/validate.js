@@ -36,29 +36,29 @@ const validate = values => {
     errors.NI_number = 'Full NI number required'
   }*/
 
-  if (!values.sortcode) {
-    errors.sortcode = 'Full sortcode required'
+  if (!values.sort_code) {
+    errors.sort_code = 'Full sortcode required'
   }
-  else if(!/[0-9]/g.test(values.sortcode.substring(0,1)) && values.sortcode.substring(0,1) !== ''){
-    errors.sortcode = 'Invalid sortcode'
+  else if(!/[0-9]/g.test(values.sort_code.substring(0,1)) && values.sort_code.substring(0,1) !== ''){
+    errors.sort_code = 'Invalid sortcode'
   }
-  else if(!/[0-9]/g.test(values.sortcode.substring(1,2)) && values.sortcode.substring(1,2) !== ''){
-    errors.sortcode = 'Invalid sortcode'
+  else if(!/[0-9]/g.test(values.sort_code.substring(1,2)) && values.sort_code.substring(1,2) !== ''){
+    errors.sort_code = 'Invalid sortcode'
   }
-  else if(!/[0-9]/g.test(values.sortcode.substring(2,3)) && values.sortcode.substring(2,3) !== ''){
-    errors.sortcode = 'Invalid sortcode'
+  else if(!/[0-9]/g.test(values.sort_code.substring(2,3)) && values.sort_code.substring(2,3) !== ''){
+    errors.sort_code = 'Invalid sortcode'
   }
-  else if(!/[0-9]/g.test(values.sortcode.substring(3,4)) && values.sortcode.substring(3,4) !== ''){
-    errors.sortcode = 'Invalid sortcode'
+  else if(!/[0-9]/g.test(values.sort_code.substring(3,4)) && values.sort_code.substring(3,4) !== ''){
+    errors.sort_code = 'Invalid sortcode'
   }
-  else if(!/[0-9]/g.test(values.sortcode.substring(4,5)) && values.sortcode.substring(4,5) !== ''){
-    errors.sortcode = 'Invalid sortcode'
+  else if(!/[0-9]/g.test(values.sort_code.substring(4,5)) && values.sort_code.substring(4,5) !== ''){
+    errors.sort_code = 'Invalid sortcode'
   }
-  else if(!/[0-9]/g.test(values.sortcode.substring(5,6)) && values.sortcode.substring(5,6) !== ''){
-    errors.sortcode = 'Invalid sortcode'
+  else if(!/[0-9]/g.test(values.sort_code.substring(5,6)) && values.sort_code.substring(5,6) !== ''){
+    errors.sort_code = 'Invalid sortcode'
   }
-  else if (values.sortcode.length !== 6) {
-    errors.sortcode = 'Full sortcode required'
+  else if (values.sort_code.length !== 6) {
+    errors.sort_code = 'Full sortcode required'
   }
 
 
@@ -70,56 +70,58 @@ const validate = values => {
 
 
 
-  if (!values.house_number) {
-    errors.house_number = 'House number required'
+  if (!values.house_no) {
+    errors.house_no = 'House number required'
   }
 
-  if (!values.flat_number) {
-    errors.flat_number = 'Flat number required'
+  if (!values.flat_no) {
+    errors.flat_no = 'Flat number required'
   }
 
-  if(!values.bank_account_number){
-    errors.bank_account_number = 'Bank account number required'
+  if(!values.acc_no){
+    errors.acc_no = 'Bank account number required'
   }  
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(0,1)) && values.bank_account_number.substring(0,1) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(0,1)) && values.acc_no.substring(0,1) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(1,2)) && values.bank_account_number.substring(1,2) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(1,2)) && values.acc_no.substring(1,2) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(2,3)) && values.bank_account_number.substring(2,3) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(2,3)) && values.acc_no.substring(2,3) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(3,4)) && values.bank_account_number.substring(3,4) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(3,4)) && values.acc_no.substring(3,4) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(4,5)) && values.bank_account_number.substring(4,5) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(4,5)) && values.acc_no.substring(4,5) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(5,6)) && values.bank_account_number.substring(5,6) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(5,6)) && values.acc_no.substring(5,6) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(5,6)) && values.bank_account_number.substring(6,7) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(5,6)) && values.acc_no.substring(6,7) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(!/[0-9]/g.test(values.bank_account_number.substring(5,6)) && values.bank_account_number.substring(7,8) !== ''){
-    errors.bank_account_number = 'Invalid bank account number'
+  else if(!/[0-9]/g.test(values.acc_no.substring(5,6)) && values.acc_no.substring(7,8) !== ''){
+    errors.acc_no = 'Invalid bank account number'
   }
-  else if(values.bank_account_number.length !== 8){
-    errors.bank_account_number = 'Full bank account number required'
+  else if(values.acc_no.length !== 8){
+    errors.acc_no = 'Full bank account number required'
   }
 
-  if (!values.road_name) {
-    errors.road_name = 'Road name required'
+  if (!values.address_road1) {
+    errors.address_road1 = 'Road name required'
   }
-  if (!values.court_name) {
-    errors.court_name = 'Court name required'
+  if (!values.address_road2) {
+    errors.address_road2 = 'Court name required'
   }
-  if (!values.postal_code) {
-    errors.postal_code = 'Postal code required'
+  if (!values.address_road3) {
+    errors.address_road3 = 'Postal code required'
   }
-  if (!values.birth_date) {
-    errors.birth_date = 'Birth date required'
+
+  
+  if (!values.dob) {
+    errors.dob = 'Birth date required'
   }
   
   
